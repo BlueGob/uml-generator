@@ -46,6 +46,7 @@
 This project is a tool for generating PlantUML code to create diagrams from user-provided input fields and selected checkboxes.
 It simplifies the process of creating diagrams by allowing users to define elements and relationships through a user-friendly interface.  
 
+![image](https://github.com/BlueGob/uml-generator/assets/59932913/e8a7274b-8853-4244-bb9b-af7385f21ec2)
 
 ### Built With
 
