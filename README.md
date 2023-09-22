@@ -64,7 +64,7 @@ plantUml server running on your machine. check this [link](https://github.com/pl
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git https://github.com/BlueGob/uml-generator.git
     ```
 2. Create venv
    ```sh
