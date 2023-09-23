@@ -76,9 +76,22 @@ with left:
     
 
 if generateButton:
-    plantuml = "@startuml\n left to right direction\n " 
+    plantuml = "@startuml\n left to right direction\n"
+
+    #grouping actors to garantee that they will be in the same column
+    plantuml += """
+                skinparam shadowing false
+                skinparam package<<Layout>> {
+                    borderColor Transparent
+                    backgroundColor Transparent
+                    fontColor Transparent
+                stereotypeFontColor Transparent
+                }
+""" 
+    plantuml += "package p1 <<Layout>> {\n"
     for actor in actors:
         plantuml += "  actor " + actor + "\n"
+    plantuml += "}\n"
     plantuml += "rectangle {\n"
     for use_case in use_cases:
         plantuml += "  usecase " + '('+use_case+')' + "\n"
@@ -93,13 +106,12 @@ if generateButton:
             elif split[1] == "includes":
                 plantuml += "  "+"("+split[0]+")" + " ..> " + "("+split[2] + ")"+":<<includes>>" +"\n"
             elif split[1] == "inheritance":
-                plantuml += "  "+"("+split[0]+")" + " <|-l--- " +"("+ split[2] +")"+ "\n"
+                plantuml += "  "+"("+split[0]+")" + " <|-- " +"("+ split[2] +")"+ "\n"
 
     plantuml += "@enduml"
     code = coder(plantuml)
     response = uc(code,"png")
     image_data = BytesIO(response)              
-
     st.session_state.image = Image.open(image_data)
 with right:
     if st.session_state.image == "":
