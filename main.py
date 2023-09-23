@@ -10,7 +10,7 @@ st.set_page_config(
     page_title="UML generator",
     initial_sidebar_state="expanded",
     layout="wide",
-    page_icon="🔍",
+    page_icon="⚙️",
 )
 if 'node' not in st.session_state:
     st.session_state.node = []
@@ -23,7 +23,9 @@ if "checked" not in st.session_state:
 if "expanded" not in st.session_state:
     st.session_state.expanded = []
 if "selected" not in st.session_state:
-    st.session_state.selected = []
+    st.session_state.selected = {"checked":[],"expanded":[]}
+if "image" not in st.session_state:
+    st.session_state.image = ""
 st.title("UML generator")
 
 button_style = """
@@ -91,14 +93,16 @@ if generateButton:
             elif split[1] == "includes":
                 plantuml += "  "+"("+split[0]+")" + " ..> " + "("+split[2] + ")"+":<<includes>>" +"\n"
             elif split[1] == "inheritance":
-                plantuml += "  "+"("+split[0]+")" + " <|-r--- " +"("+ split[2] +")"+ "\n"
+                plantuml += "  "+"("+split[0]+")" + " <|-l--- " +"("+ split[2] +")"+ "\n"
 
     plantuml += "@enduml"
     code = coder(plantuml)
-    print(plantuml)
     response = uc(code,"png")
     image_data = BytesIO(response)              
 
-    image = Image.open(image_data)
-    with right:
-        st.image(image, caption='Use case diagram', use_column_width=True)
+    st.session_state.image = Image.open(image_data)
+with right:
+    if st.session_state.image == "":
+        st.write("No image to display")
+    else:
+        st.image(st.session_state.image, caption='Use case diagram', use_column_width=True)
